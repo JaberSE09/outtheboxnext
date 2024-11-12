@@ -35,7 +35,7 @@ export default async function Page({
         className={`mb-8`}
         contentClassName="p-7 sm:pb-24 xl:pb-32 sm:pt-16 xl:pt-24 md:min-h-[270px] xl:min-h-[360px] 2xl:min-h-[550px]"
       />
-      <Container>
+      {/* <Container>
         <FeatureCarousel lang={lang} />
         <BannerGrid
           lang={lang}
@@ -59,7 +59,7 @@ export default async function Page({
           data={bannerBrand}
           className="mb-8 lg:mb-12"
         />
-      </Container>
+      </Container> */}
     </>
   );
 }

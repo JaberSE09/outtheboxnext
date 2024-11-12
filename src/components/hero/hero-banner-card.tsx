@@ -5,10 +5,10 @@ import Link from '@components/ui/link';
 import useWindowSize from '@utils/use-window-size';
 import { useTranslation } from 'src/app/i18n/client';
 import HeroSearchBox from '@components/hero/hero-banner-search';
+import { PrismicNextImageProps } from '@prismicio/next';
 
 interface BannerProps {
-  lang: string;
-  banner?: any;
+  banner?: PrismicNextImageProps;
   className?: string;
   heroContentCard?: boolean;
   variant?: 'default' | 'slider' | 'medium' | 'antique';
@@ -19,13 +19,12 @@ function getImage(deviceWidth: number, imgObj: any) {
 }
 
 export default function HeroBannerCard({
-  lang,
   banner,
   className = 'py-20 xy:pt-24',
   variant = 'default',
   heroContentCard = true,
 }: BannerProps) {
-  const { t } = useTranslation(lang, 'common');
+  const { t } = useTranslation('common');
   const { width } = useWindowSize();
   const { title, description, image } = banner;
   const selectedImage = getImage(width!, image);
@@ -97,7 +96,7 @@ export default function HeroBannerCard({
       </div>
     </div>
   ) : (
-    <Link href={`/${lang}${banner.btnUrl}`}>
+    <Link href={'#'}>
       <div
         className={cn(
           'w-full bg-skin-thumbnail bg-no-repeat bg-cover flex items-center',

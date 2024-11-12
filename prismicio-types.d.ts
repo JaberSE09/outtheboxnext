@@ -87,6 +87,24 @@ export type CategoriesDocument<Lang extends string = string> =
     Lang
   >;
 
+interface HeroBannerDocumentData {}
+
+/**
+ * Hero Banner document from Prismic
+ *
+ * - **API ID**: `hero_banner`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type HeroBannerDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<HeroBannerDocumentData>,
+    'hero_banner',
+    Lang
+  >;
+
 type HomeDocumentDataSlicesSlice = HeroSlice;
 
 type HomeDocumentDataSlices1Slice = HeroSlice;
@@ -126,8 +144,7 @@ interface HomeDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/field#slices
    */
-  slices: prismic.SliceZone<HomeDocumentDataSlicesSlice>
-  /**
+  slices: prismic.SliceZone<HomeDocumentDataSlicesSlice> /**
    * Meta Title field in *Home*
    *
    * - **Field Type**: Text
@@ -251,8 +268,39 @@ export type ProductsDocument<Lang extends string = string> =
 
 export type AllDocumentTypes =
   | CategoriesDocument
+  | HeroBannerDocument
   | HomeDocument
   | ProductsDocument;
+
+/**
+ * Default variation for Categories Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type CategoriesSliceDefault = prismic.SharedSliceVariation<
+  'default',
+  Record<string, never>,
+  never
+>;
+
+/**
+ * Slice variation for *Categories*
+ */
+type CategoriesSliceVariation = CategoriesSliceDefault;
+
+/**
+ * Categories Shared Slice
+ *
+ * - **API ID**: `categories`
+ * - **Description**: Categories
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type CategoriesSlice = prismic.SharedSlice<
+  'categories',
+  CategoriesSliceVariation
+>;
 
 /**
  * Primary content in *Hero → Default → Primary*
@@ -320,14 +368,14 @@ declare module '@prismicio/client' {
   interface CreateClient {
     (
       repositoryNameOrEndpoint: string,
-      options?: prismic.ClientConfig
+      options?: prismic.ClientConfig,
     ): prismic.Client<AllDocumentTypes>;
   }
 
   interface CreateWriteClient {
     (
       repositoryNameOrEndpoint: string,
-      options: prismic.WriteClientConfig
+      options: prismic.WriteClientConfig,
     ): prismic.WriteClient<AllDocumentTypes>;
   }
 
@@ -341,6 +389,8 @@ declare module '@prismicio/client' {
       CategoriesDocumentData,
       CategoriesDocumentDataProductsItem,
       CategoriesDocumentDataSlicesSlice,
+      HeroBannerDocument,
+      HeroBannerDocumentData,
       HomeDocument,
       HomeDocumentData,
       HomeDocumentDataSlicesSlice,
@@ -348,6 +398,9 @@ declare module '@prismicio/client' {
       ProductsDocument,
       ProductsDocumentData,
       AllDocumentTypes,
+      CategoriesSlice,
+      CategoriesSliceVariation,
+      CategoriesSliceDefault,
       HeroSlice,
       HeroSliceDefaultPrimary,
       HeroSliceVariation,

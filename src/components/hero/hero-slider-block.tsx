@@ -3,17 +3,16 @@
 import HeroBannerCard from '@components/hero/hero-banner-card';
 import Carousel from '@components/ui/carousel/carousel';
 import { SwiperSlide } from '@components/ui/carousel/slider';
+import { PrismicNextImageProps } from '@prismicio/next';
 
 interface Props {
-  lang: string;
-  heroBanner?: any;
+  heroBanner?: PrismicNextImageProps;
   className?: string;
   contentClassName?: string;
   showHeroContent?: boolean;
 }
 
 const HeroSliderBlock: React.FC<Props> = ({
-  lang,
   heroBanner,
   className = 'mb-7',
   contentClassName = 'px-5 py-10 xl:py-24',
@@ -28,8 +27,7 @@ const HeroSliderBlock: React.FC<Props> = ({
         navigation={true}
         autoplay={false}
         prevActivateId={`prevActivateId`}
-                nextActivateId={`nextActivateId`}
-        lang={lang}
+        nextActivateId={`nextActivateId`}
       >
         {heroBanner?.map((banner: any) => (
           <SwiperSlide key={`banner--key${banner.id}`}>
@@ -38,7 +36,6 @@ const HeroSliderBlock: React.FC<Props> = ({
               variant="slider"
               className={contentClassName}
               heroContentCard={showHeroContent}
-              lang={lang}
             />
           </SwiperSlide>
         ))}
