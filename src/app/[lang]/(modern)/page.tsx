@@ -14,6 +14,7 @@ import {
 import CategoryGridBlock from '@components/common/category-grid-block';
 import ListingTabsElectronicFeed from '@components/product/feeds/listingtabs-electronic-feed';
 import Latestblog from '@components/common/latestblog';
+import { createClient } from 'src/prismicio';
 
 export const metadata: Metadata = {
   title: 'Razor | Electronics Store Store React Template',
@@ -26,11 +27,13 @@ export default async function Page({
 }: {
   params: { lang: string };
 }) {
+  const client = createClient();
+  const banner = await client.getSingle('hero_banner');
   return (
     <>
       <HeroSliderBlock
         lang={lang}
-        heroBanner={heroSlider}
+        heroBanner={banner}
         showHeroContent={false}
         className={`mb-8`}
         contentClassName="p-7 sm:pb-24 xl:pb-32 sm:pt-16 xl:pt-24 md:min-h-[270px] xl:min-h-[360px] 2xl:min-h-[550px]"

@@ -4,9 +4,13 @@ import HeroBannerCard from '@components/hero/hero-banner-card';
 import Carousel from '@components/ui/carousel/carousel';
 import { SwiperSlide } from '@components/ui/carousel/slider';
 import { PrismicNextImageProps } from '@prismicio/next';
+import {
+  HeroBannerDocument,
+  HeroBannerDocumentDataHerobannerItem,
+} from '../../../prismicio-types';
 
 interface Props {
-  heroBanner?: PrismicNextImageProps;
+  heroBanner?: HeroBannerDocument;
   className?: string;
   contentClassName?: string;
   showHeroContent?: boolean;
@@ -24,21 +28,24 @@ const HeroSliderBlock: React.FC<Props> = ({
         pagination={{
           clickable: true,
         }}
+        lang="en"
         navigation={true}
         autoplay={false}
         prevActivateId={`prevActivateId`}
         nextActivateId={`nextActivateId`}
       >
-        {heroBanner?.map((banner: any) => (
-          <SwiperSlide key={`banner--key${banner.id}`}>
-            <HeroBannerCard
-              banner={banner}
-              variant="slider"
-              className={contentClassName}
-              heroContentCard={showHeroContent}
-            />
-          </SwiperSlide>
-        ))}
+        {heroBanner?.data.herobanner.map(
+          (banner: HeroBannerDocumentDataHerobannerItem, index) => (
+            <SwiperSlide key={`banner--key${index}`}>
+              <HeroBannerCard
+                banner={banner}
+                variant="slider"
+                className={contentClassName}
+                heroContentCard={showHeroContent}
+              />
+            </SwiperSlide>
+          )
+        )}
       </Carousel>
     </div>
   );

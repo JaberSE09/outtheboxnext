@@ -6,16 +6,20 @@ import useWindowSize from '@utils/use-window-size';
 import { useTranslation } from 'src/app/i18n/client';
 import HeroSearchBox from '@components/hero/hero-banner-search';
 import { PrismicNextImageProps } from '@prismicio/next';
+import {
+  HeroBannerDocument,
+  HeroBannerDocumentDataHerobannerItem,
+} from 'prismicio-types';
 
 interface BannerProps {
-  banner?: PrismicNextImageProps;
+  banner?: HeroBannerDocumentDataHerobannerItem;
   className?: string;
   heroContentCard?: boolean;
   variant?: 'default' | 'slider' | 'medium' | 'antique';
 }
 
 function getImage(deviceWidth: number, imgObj: any) {
-  return deviceWidth < 480 ? imgObj.mobile : imgObj.desktop;
+  return deviceWidth < 480 ? imgObj.mobile : imgObj;
 }
 
 export default function HeroBannerCard({
@@ -26,7 +30,7 @@ export default function HeroBannerCard({
 }: BannerProps) {
   const { t } = useTranslation('common');
   const { width } = useWindowSize();
-  const { title, description, image } = banner;
+  const { image, title, secondarytitle } = banner!;
   const selectedImage = getImage(width!, image);
   return heroContentCard ? (
     <div

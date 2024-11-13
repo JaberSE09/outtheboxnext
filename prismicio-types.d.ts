@@ -5,6 +5,60 @@ import type * as prismic from '@prismicio/client';
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
 
 /**
+ * Content for Banner documents
+ */
+interface BannerDocumentData {
+  /**
+   * Title field in *Banner*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner.title
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * Description field in *Banner*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner.description
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  description: prismic.RichTextField;
+
+  /**
+   * image field in *Banner*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: banner.image
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<never>;
+}
+
+/**
+ * Banner document from Prismic
+ *
+ * - **API ID**: `banner`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type BannerDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<BannerDocumentData>,
+    'banner',
+    Lang
+  >;
+
+/**
  * Item in *Categories → Products*
  */
 export interface CategoriesDocumentDataProductsItem {}
@@ -87,19 +141,70 @@ export type CategoriesDocument<Lang extends string = string> =
     Lang
   >;
 
-interface HeroBannerDocumentData {}
+/**
+ * Item in *Hero Banner → HeroBanner*
+ */
+export interface HeroBannerDocumentDataHerobannerItem {
+  /**
+   * image field in *Hero Banner → HeroBanner*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_banner.herobanner[].image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  image: prismic.ImageField<never>;
+
+  /**
+   * Title field in *Hero Banner → HeroBanner*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_banner.herobanner[].title
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * SecondaryTitle field in *Hero Banner → HeroBanner*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_banner.herobanner[].secondarytitle
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  secondarytitle: prismic.RichTextField;
+}
+
+/**
+ * Content for Hero Banner documents
+ */
+interface HeroBannerDocumentData {
+  /**
+   * HeroBanner field in *Hero Banner*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: hero_banner.herobanner[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  herobanner: prismic.GroupField<
+    Simplify<HeroBannerDocumentDataHerobannerItem>
+  >;
+}
 
 /**
  * Hero Banner document from Prismic
  *
  * - **API ID**: `hero_banner`
- * - **Repeatable**: `true`
+ * - **Repeatable**: `false`
  * - **Documentation**: https://prismic.io/docs/custom-types
  *
  * @typeParam Lang - Language API ID of the document.
  */
 export type HeroBannerDocument<Lang extends string = string> =
-  prismic.PrismicDocumentWithUID<
+  prismic.PrismicDocumentWithoutUID<
     Simplify<HeroBannerDocumentData>,
     'hero_banner',
     Lang
@@ -267,6 +372,7 @@ export type ProductsDocument<Lang extends string = string> =
   >;
 
 export type AllDocumentTypes =
+  | BannerDocument
   | CategoriesDocument
   | HeroBannerDocument
   | HomeDocument
@@ -385,12 +491,15 @@ declare module '@prismicio/client' {
 
   namespace Content {
     export type {
+      BannerDocument,
+      BannerDocumentData,
       CategoriesDocument,
       CategoriesDocumentData,
       CategoriesDocumentDataProductsItem,
       CategoriesDocumentDataSlicesSlice,
       HeroBannerDocument,
       HeroBannerDocumentData,
+      HeroBannerDocumentDataHerobannerItem,
       HomeDocument,
       HomeDocumentData,
       HomeDocumentDataSlicesSlice,
