@@ -10,6 +10,7 @@ import {
   HeroBannerDocument,
   HeroBannerDocumentDataHerobannerItem,
 } from 'prismicio-types';
+import { PrismicRichText } from '@prismicio/react';
 
 interface BannerProps {
   banner?: HeroBannerDocumentDataHerobannerItem;
@@ -28,7 +29,8 @@ export default function HeroBannerCard({
   variant = 'default',
   heroContentCard = true,
 }: BannerProps) {
-  const { t } = useTranslation('common');
+  console.log(banner, 'banner');
+
   const { width } = useWindowSize();
   const { image, title, secondarytitle } = banner!;
   const selectedImage = getImage(width!, image);
@@ -72,7 +74,7 @@ export default function HeroBannerCard({
                 variant === 'medium',
             })}
           >
-            {t(title)}
+            {title}
           </h2>
           <p
             className={cn(
@@ -85,17 +87,8 @@ export default function HeroBannerCard({
               }
             )}
           >
-            {t(description)}
+            <PrismicRichText field={secondarytitle} />
           </p>
-
-          {banner.btnText && (
-            <Link
-              href={`/${lang}${banner.btnUrl}`}
-              className="text-brand-light h-[45px] mt-5 md:mt-12 text-base inline-flex items-center justify-center transition duration-300 rounded px-10 py-2 font-semibold border-2  hover:border-brand hover:bg-brand"
-            >
-              {t(banner.btnText)}
-            </Link>
-          )}
         </div>
       </div>
     </div>
