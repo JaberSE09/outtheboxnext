@@ -1,0 +1,56 @@
+{
+  "format": "custom",
+  "id": "settings",
+  "label": "Settings",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "logo": {
+        "type": "Image",
+        "config": {
+          "label": "Logo",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
+      "address": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Address",
+          "placeholder": "",
+          "allowTargetBlank": true,
+          "multi": "paragraph"
+        }
+      },
+      "phone_number": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Phone Number",
+          "placeholder": "",
+          "allowTargetBlank": true,
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+        }
+      },
+      "links": {
+        "type": "Group",
+        "config": {
+          "label": "Links",
+          "repeat": true,
+          "fields": {
+            "link": {
+              "type": "Link",
+              "config": {
+                "label": "Link",
+                "placeholder": "",
+                "allowTargetBlank": true,
+                "select": null,
+                "allowText": true
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -371,12 +371,93 @@ export type ProductsDocument<Lang extends string = string> =
     Lang
   >;
 
+/**
+ * Item in *Settings → Links*
+ */
+export interface SettingsDocumentDataLinksItem {
+  /**
+   * Link field in *Settings → Links*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.links[].link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  link: prismic.LinkField;
+}
+
+/**
+ * Content for Settings documents
+ */
+interface SettingsDocumentData {
+  /**
+   * Logo field in *Settings*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.logo
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  logo: prismic.ImageField<never>;
+
+  /**
+   * Address field in *Settings*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.address
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  address: prismic.RichTextField;
+
+  /**
+   * Phone Number field in *Settings*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.phone_number
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  phone_number: prismic.RichTextField;
+
+  /**
+   * Links field in *Settings*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.links[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  links: prismic.GroupField<Simplify<SettingsDocumentDataLinksItem>>;
+}
+
+/**
+ * Settings document from Prismic
+ *
+ * - **API ID**: `settings`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type SettingsDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<SettingsDocumentData>,
+    'settings',
+    Lang
+  >;
+
 export type AllDocumentTypes =
   | BannerDocument
   | CategoriesDocument
   | HeroBannerDocument
   | HomeDocument
-  | ProductsDocument;
+  | ProductsDocument
+  | SettingsDocument;
 
 /**
  * Default variation for Categories Slice
@@ -506,6 +587,9 @@ declare module '@prismicio/client' {
       HomeDocumentDataSlices1Slice,
       ProductsDocument,
       ProductsDocumentData,
+      SettingsDocument,
+      SettingsDocumentData,
+      SettingsDocumentDataLinksItem,
       AllDocumentTypes,
       CategoriesSlice,
       CategoriesSliceVariation,
