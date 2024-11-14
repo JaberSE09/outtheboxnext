@@ -424,15 +424,15 @@ interface SettingsDocumentData {
   address: prismic.RichTextField;
 
   /**
-   * Phone Number field in *Settings*
+   * Email field in *Settings*
    *
    * - **Field Type**: Rich Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: settings.phone_number
+   * - **API ID Path**: settings.email
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/field#rich-text-title
    */
-  phone_number: prismic.RichTextField;
+  email: prismic.RichTextField;
 
   /**
    * Links field in *Settings*

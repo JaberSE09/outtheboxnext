@@ -1,6 +1,7 @@
 import DefaultLayout from '@layouts/default/layout';
+import { createClient } from 'src/prismicio';
 
-export default function Layout({
+export default async function Layout({
   children,
   params: { lang },
 }: {
@@ -9,5 +10,11 @@ export default function Layout({
     lang: string;
   };
 }) {
-  return <DefaultLayout lang={lang}>{children}</DefaultLayout>;
+  const client = createClient();
+  const header = await client.getSingle('settings');
+  return (
+    <DefaultLayout settings={header} lang={lang}>
+      {children}
+    </DefaultLayout>
+  );
 }

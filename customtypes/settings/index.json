@@ -32,10 +32,10 @@
           "multi": "paragraph"
         }
       },
-      "phone_number": {
+      "email": {
         "type": "StructuredText",
         "config": {
-          "label": "Phone Number",
+          "label": "Email",
           "placeholder": "",
           "allowTargetBlank": true,
           "multi": "paragraph"
