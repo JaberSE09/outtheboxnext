@@ -391,6 +391,17 @@ export interface SettingsDocumentDataLinksItem {
  */
 interface SettingsDocumentData {
   /**
+   * Banner Text field in *Settings*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.banner_text
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  banner_text: prismic.RichTextField;
+
+  /**
    * Logo field in *Settings*
    *
    * - **Field Type**: Image
