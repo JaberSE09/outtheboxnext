@@ -36,6 +36,7 @@ function ClientRenderedHighLightedBar({ lang }: { lang: string }) {
 export default function ModernLayout({
   children,
   lang,
+  settings,
 }: {
   children: React.ReactNode;
   lang: string;
