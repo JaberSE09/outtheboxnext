@@ -75,7 +75,7 @@ export default function HeroBannerCard({
           >
             {title}
           </h2>
-          <p
+          <div
             className={cn(
               'text-base md:text-[15px] xl:text-lg leading-7 md:leading-8 xl:leading-[1.92em] relative z-10',
               {
@@ -89,11 +89,11 @@ export default function HeroBannerCard({
               backgroundColor: 'rgba(0, 0, 0, 0.5)', // Consistent dark, transparent background
               padding: '6px 12px',
               borderRadius: '4px',
-              display: 'inline-block',
+              display: 'block',
             }}
           >
             <PrismicRichText field={secondarytitle} />
-          </p>
+          </div>
         </div>
       </div>
     </div>
