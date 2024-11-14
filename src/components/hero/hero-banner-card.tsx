@@ -3,14 +3,8 @@
 import cn from 'classnames';
 import Link from '@components/ui/link';
 import useWindowSize from '@utils/use-window-size';
-import { useTranslation } from 'src/app/i18n/client';
-import HeroSearchBox from '@components/hero/hero-banner-search';
-import { PrismicNextImageProps } from '@prismicio/next';
-import {
-  HeroBannerDocument,
-  HeroBannerDocumentDataHerobannerItem,
-} from 'prismicio-types';
 import { PrismicRichText } from '@prismicio/react';
+import { HeroBannerDocumentDataHerobannerItem } from 'prismicio-types';
 
 interface BannerProps {
   banner?: HeroBannerDocumentDataHerobannerItem;
@@ -34,6 +28,7 @@ export default function HeroBannerCard({
   const { width } = useWindowSize();
   const { image, title, secondarytitle } = banner!;
   const selectedImage = getImage(width!, image);
+
   return heroContentCard ? (
     <div
       className={cn(
@@ -41,8 +36,6 @@ export default function HeroBannerCard({
         {
           'min-h-[320px] md:min-h-[460px] lg:min-h-[500px] xl:min-h-[550px]':
             variant === 'slider',
-        },
-        {
           'bg-fill-thumbnail': variant !== 'antique',
         },
         className
@@ -63,29 +56,41 @@ export default function HeroBannerCard({
           }
         )}
       >
-        <div className="text-left">
+        <div className="text-center">
           <h2
-            className={cn('text-xl lg:text-4xl font-medium', {
-              'xl:text-5xl 2xl:text-[48px] text-brand-light leading-snug md:leading-tight xl:leading-[1.3em] mb-3 md:mb-4 xl:mb-3 ':
+            className={cn('text-xl lg:text-4xl font-medium relative z-10', {
+              'xl:text-5xl 2xl:text-[48px] text-brand-light leading-snug md:leading-tight xl:leading-[1.3em] mb-3 md:mb-4 xl:mb-3':
                 variant !== 'antique',
               'text-brand-light xl:text-5xl 2xl:text-[48px]':
                 variant === 'default',
               'text-brand-light xl:text-[40px] 2xl:text-5xl 2xl:mb-4 2xl:pb-0.5':
                 variant === 'medium',
             })}
+            style={{
+              backgroundColor: 'rgba(0, 0, 0, 0.5)', // Dark transparent background
+              padding: '8px 16px',
+              borderRadius: '4px',
+              display: 'inline-block',
+            }}
           >
             {title}
           </h2>
           <p
             className={cn(
-              'text-base md:text-[15px] xl:text-lg leading-7 md:leading-8 xl:leading-[1.92em]',
+              'text-base md:text-[15px] xl:text-lg leading-7 md:leading-8 xl:leading-[1.92em] relative z-10',
               {
-                'text-brand-light ': variant === 'default',
-                'text-brand-light': variant === 'slider',
+                'text-brand-light':
+                  variant === 'default' || variant === 'slider',
                 '2xl:px-24': variant === 'medium',
                 'xl:text-xl': variant === 'antique',
               }
             )}
+            style={{
+              backgroundColor: 'rgba(0, 0, 0, 0.5)', // Consistent dark, transparent background
+              padding: '6px 12px',
+              borderRadius: '4px',
+              display: 'inline-block',
+            }}
           >
             <PrismicRichText field={secondarytitle} />
           </p>
@@ -98,7 +103,7 @@ export default function HeroBannerCard({
         className={cn(
           'w-full bg-skin-thumbnail bg-no-repeat bg-cover flex items-center',
           {
-            'min-h-[160px]  ': variant === 'slider',
+            'min-h-[160px]': variant === 'slider',
           },
           className
         )}
