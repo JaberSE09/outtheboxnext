@@ -22,7 +22,8 @@ import { IoLocationSharp } from 'react-icons/io5';
 import client from '@src/prismicio';
 import { SettingsDocument } from 'prismicio-types';
 import { PrismicRichText } from '@prismicio/react';
-
+import { MdOutlineEmail } from 'react-icons/md';
+import Link from 'next/link';
 const AuthMenu = dynamic(() => import('@layouts/header/auth-menu'), {
   ssr: false,
 });
@@ -125,6 +126,18 @@ function Header({
                     <div className="text-sm text-white font-medium">
                       <PrismicRichText field={settings.data.address} />
                     </div>
+                  </div>
+                </div>
+                <div className={`text-[14px] gap-2 hidden lg:flex`}>
+                  <MdOutlineEmail color="white" size={40} />
+                  <div className={``}>
+                    <div className="text-white">Contact Us</div>
+                    <Link
+                      href={`mailto:${settings.data.email}`}
+                      className="text-sm text-white font-medium"
+                    >
+                      <PrismicRichText field={settings.data.email} />
+                    </Link>
                   </div>
                 </div>
                 {/* End of Phone */}
