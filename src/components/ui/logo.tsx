@@ -3,39 +3,30 @@ import Link from '@components/ui/link';
 import cn from 'classnames';
 import { siteSettings } from '@settings/site-settings';
 
-import React from "react";
+import React from 'react';
+import { SettingsDocument } from 'prismicio-types';
+import { PrismicNextImage } from '@prismicio/next';
 interface Props {
   lang: string;
   variant?: string;
   className?: string;
   href?: string;
+  settings?: SettingsDocument;
 }
 const Logo: React.FC<Props> = ({
   className,
   variant,
   href = siteSettings.logo.href,
+  settings,
   ...props
 }) => {
   return (
-    <Link
-      href={href}
+    <div
       className={cn('inline-flex focus:outline-none ', className)}
       {...props}
     >
-      {variant === 'black' ? (
-        <Image
-          src={siteSettings.logo.urlReverse}
-          alt={siteSettings.logo.alt}
-          loading="eager"
-        />
-      ) : (
-        <Image
-          src={siteSettings.logo.url}
-          alt={siteSettings.logo.alt}
-          loading="eager"
-        />
-      )}
-    </Link>
+      <PrismicNextImage field={settings?.data.logo} />{' '}
+    </div>
   );
 };
 

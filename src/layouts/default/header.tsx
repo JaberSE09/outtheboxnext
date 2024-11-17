@@ -18,8 +18,10 @@ import { FiMenu } from 'react-icons/fi';
 import CategoryDropdownMenu from '@components/category/category-dropdown-menu';
 import { useTranslation } from 'src/app/i18n/client';
 import { AiOutlineUser } from 'react-icons/ai';
-
+import { IoLocationSharp } from 'react-icons/io5';
 import client from '@src/prismicio';
+import { SettingsDocument } from 'prismicio-types';
+import { PrismicRichText } from '@prismicio/react';
 
 const AuthMenu = dynamic(() => import('@layouts/header/auth-menu'), {
   ssr: false,
@@ -31,7 +33,13 @@ const CartButton = dynamic(() => import('@components/cart/cart-button'), {
 type DivElementRef = React.MutableRefObject<HTMLDivElement>;
 const { site_header } = siteSettings;
 
-function Header({ lang }: { lang: string }) {
+function Header({
+  lang,
+  settings,
+}: {
+  lang: string;
+  settings: SettingsDocument;
+}) {
   const {
     openSidebar,
     displaySearch,
@@ -76,17 +84,17 @@ function Header({ lang }: { lang: string }) {
                     /> */}
           <div className="top-bar  text-13px text-gray-300 border-b border-white/10">
             <Container>
-              <div className="h-12 flex justify-between items-center py-2 gap-5">
-                <text className={`hidden md:block truncate`}>
-                  {t('text-free-shipping')}
-                </text>
+              <div className="h-12 flex justify-center items-center py-2 gap-5">
+                <div className={`hidden md:block truncate`}>
+                  <PrismicRichText field={settings.data.banner_text} />
+                </div>
                 <div className="flex flex-shrink-0 smx-auto max-w-[1920px]pace-s-5">
-                  <HeaderMenutop
+                  {/* <HeaderMenutop
                     data={site_header.topmenu}
                     className="flex transition-all duration-200 ease-in-out"
                     lang={lang}
-                  />
-                  <LanguageSwitcher lang={lang} />
+                  /> */}
+                  {/* <LanguageSwitcher lang={lang} /> */}
                 </div>
               </div>
             </Container>
@@ -103,16 +111,20 @@ function Header({ lang }: { lang: string }) {
                     <FiMenu className="text-xl lg:text-2xl text-skin-inverted" />
                   </button>
                 </div>
-                <Logo lang={lang} className="ps-3 md:ps-0 lg:mx-0" />
+                <Logo
+                  settings={settings}
+                  lang={lang}
+                  className="ps-3 md:ps-0 lg:mx-0 w-[70px]"
+                />
                 {/* End of logo */}
 
                 <div className={`text-[14px] gap-2 hidden lg:flex`}>
-                  <div className="image_hotline bg-iconPhone2"></div>
+                  <IoLocationSharp color="white" size={40} />
                   <div className={``}>
-                    <div className="text-white">{t('text-hotline')}</div>
-                    <a className="text-sm text-white font-medium">
-                      {t('link-phone')}
-                    </a>
+                    <div className="text-white">Address</div>
+                    <div className="text-sm text-white font-medium">
+                      <PrismicRichText field={settings.data.address} />
+                    </div>
                   </div>
                 </div>
                 {/* End of Phone */}
