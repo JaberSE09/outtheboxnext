@@ -22,10 +22,6 @@ const HeroSliderBlock: React.FC<Props> = ({
   contentClassName = 'px-5 py-10 xl:py-24',
   showHeroContent = true,
 }) => {
-  if (!heroBanner || !heroBanner.data?.herobanner?.length) {
-    return null; // Or render a placeholder
-  }
-
   return (
     <div className={`${className}`}>
       <Carousel
