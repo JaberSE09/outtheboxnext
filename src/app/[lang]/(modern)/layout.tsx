@@ -1,6 +1,7 @@
 import ModernLayout from '@layouts/modern/layout';
+import { createClient } from 'src/prismicio';
 
-export default function DefaultLayout({
+export default async function DefaultLayout({
   children,
   params: { lang },
 }: {
@@ -9,5 +10,12 @@ export default function DefaultLayout({
     lang: string;
   };
 }) {
-  return <ModernLayout lang={lang}>{children}</ModernLayout>;
+  const client = createClient();
+  const settings = await client.getSingle('settings');
+
+  return (
+    <ModernLayout settings={settings} lang={lang}>
+      {children}
+    </ModernLayout>
+  );
 }
