@@ -32,7 +32,7 @@ export default async function Page({
   return (
     <>
       <HeroSliderBlock
-        heroBanner={banner}
+        heroBanner={banner || { data: { herobanner: [] } }}
         showHeroContent={true}
         className={`mb-8`}
         contentClassName="p-7 sm:pb-24 xl:pb-32 sm:pt-16 xl:pt-24 md:min-h-[270px] xl:min-h-[360px] 2xl:min-h-[550px]"
