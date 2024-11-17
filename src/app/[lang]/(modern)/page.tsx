@@ -32,7 +32,6 @@ export default async function Page({
   return (
     <>
       <HeroSliderBlock
-        lang={lang}
         heroBanner={banner}
         showHeroContent={true}
         className={`mb-8`}
