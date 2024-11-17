@@ -23,7 +23,11 @@ const HeroSliderBlock: React.FC<Props> = ({
   showHeroContent = true,
 }) => {
   if (!heroBanner || !heroBanner.data?.herobanner?.length) {
-    return null; // Or render a placeholder
+    return (
+      <div className={`${className} text-center`}>
+        <p>No banners available</p>
+      </div>
+    );
   }
 
   return (
