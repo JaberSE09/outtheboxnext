@@ -1,11 +1,16 @@
 import Link from '@components/ui/link';
 import { FaChevronDown } from 'react-icons/fa';
-import {BsChevronDown} from 'react-icons/bs';
+import { BsChevronDown } from 'react-icons/bs';
 import ListMenu from '@components/ui/list-menu';
 import SubMega from '@components/ui/mega/sub-mega';
 import cn from 'classnames';
 import { useTranslation } from 'src/app/i18n/client';
 import { useState } from 'react';
+import {
+  SettingsDocumentData,
+  SettingsDocumentDataLinksItem,
+} from 'prismicio-types';
+import { PrismicNextLink } from '@prismicio/next';
 
 interface MenuProps {
   lang: string;
@@ -14,28 +19,31 @@ interface MenuProps {
   bgPrimary?: boolean;
 }
 
-const HeaderMenu: React.FC<MenuProps> = ({ lang, data, className, bgPrimary }) => {
+const HeaderMenu: React.FC<MenuProps> = ({
+  lang,
+  data,
+  className,
+  bgPrimary,
+}) => {
   const { t } = useTranslation(lang, 'menu');
   const [hoverMenu, setHoverMenu] = useState(Boolean(false));
   return (
     <nav className={cn('headerMenu flex w-full', className)}>
-      {data?.map((item: any) => (
+      {data?.map((item: SettingsDocumentDataLinksItem, index: number) => (
         <div
-          className={`menuItem group py-3 mx-4 xl:mx-4 2xl:mx-5 ${
-            item.type != 'mega' ? 'relative' : ''
-          }`}
-          key={item.id}
+          className={`menuItem group py-3 mx-4 xl:mx-4 2xl:mx-5`}
+          key={index}
           onMouseEnter={() => setHoverMenu(true)}
           onMouseLeave={() => setHoverMenu(false)}
         >
           <Link
-            href={`/${lang}${item.path}`}
+            href={`/${lang}${item.L}`}
             className={`uppercase inline-flex items-center text-sm  py-2 font-medium relative group-hover:text-brand  ${
               !bgPrimary && 'text-white '
             }`}
           >
-            {t(item.label)}
-            {(item?.columns || item.subMenu) && (
+            <PrismicNextLink field={item.link} />
+            {/* {(item?.columns || item.subMenu) && (
               <span
                 className={`text-xs w-4 flex justify-end  group-hover:text-brand ${
                   !bgPrimary && 'text-white'
@@ -43,10 +51,10 @@ const HeaderMenu: React.FC<MenuProps> = ({ lang, data, className, bgPrimary }) =
               >
                 <BsChevronDown className="transition duration-300 ease-in-out transform" />
               </span>
-            )}
+            )} */}
           </Link>
 
-          {item?.subMenu && Array.isArray(item?.subMenu) && (
+          {/* {item?.subMenu && Array.isArray(item?.subMenu) && (
             <>
               {item?.type != 'mega' ? (
                 <div className="absolute z-30 opacity-0 subMenu shadow-dropDown transition-all duration-300 invisible bg-brand-light ltr:left-0 rtl:right-0 w-[220px] xl:w-[240px] group-hover:opacity-100">
@@ -72,7 +80,7 @@ const HeaderMenu: React.FC<MenuProps> = ({ lang, data, className, bgPrimary }) =
                 <SubMega item={item} lang={lang} />
               )}
             </>
-          )}
+          )} */}
         </div>
       ))}
     </nav>

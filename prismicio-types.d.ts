@@ -372,6 +372,21 @@ export type ProductsDocument<Lang extends string = string> =
   >;
 
 /**
+ * Item in *Settings → Links*
+ */
+export interface SettingsDocumentDataLinksItem {
+  /**
+   * Link field in *Settings → Links*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.links[].link
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  link: prismic.LinkField;
+}
+
+/**
  * Content for Settings documents
  */
 interface SettingsDocumentData {
@@ -418,6 +433,17 @@ interface SettingsDocumentData {
    * - **Documentation**: https://prismic.io/docs/field#rich-text-title
    */
   email: prismic.RichTextField;
+
+  /**
+   * Links field in *Settings*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.links[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  links: prismic.GroupField<Simplify<SettingsDocumentDataLinksItem>>;
 }
 
 /**
@@ -574,6 +600,7 @@ declare module '@prismicio/client' {
       ProductsDocumentData,
       SettingsDocument,
       SettingsDocumentData,
+      SettingsDocumentDataLinksItem,
       AllDocumentTypes,
       CategoriesSlice,
       CategoriesSliceVariation,

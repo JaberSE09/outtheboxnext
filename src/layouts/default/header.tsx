@@ -200,7 +200,7 @@ function Header({
                 </div>
                 <HeaderMenu
                   bgPrimary={true}
-                  data={site_header.menu}
+                  data={settings.data.links}
                   className="flex transition-all duration-200 ease-in-out"
                   lang={lang}
                 />
