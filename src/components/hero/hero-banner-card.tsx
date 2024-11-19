@@ -1,7 +1,6 @@
 'use client';
 
 import cn from 'classnames';
-import Link from '@components/ui/link';
 import useWindowSize from '@utils/use-window-size';
 import { PrismicRichText } from '@prismicio/react';
 import { HeroBannerDocumentDataHerobannerItem } from 'prismicio-types';
@@ -13,10 +12,6 @@ interface BannerProps {
   variant?: 'default' | 'slider' | 'medium' | 'antique';
 }
 
-function getImage(deviceWidth: number, imgObj: any) {
-  return deviceWidth < 480 ? imgObj.mobile : imgObj;
-}
-
 export default function HeroBannerCard({
   banner,
   className = 'py-20 xy:pt-24',
@@ -24,31 +19,28 @@ export default function HeroBannerCard({
   heroContentCard = true,
 }: BannerProps) {
   const { width } = useWindowSize();
-  const { image, title, secondarytitle } = banner!;
-  const selectedImage = getImage(width!, image);
+  const { image, title = 'Default Title', secondarytitle } = banner || {};
 
   return (
     <div
       className={cn(
-        'w-full bg-no-repeat bg-cover bg-center flex items-center rounded',
-        {
-          'min-h-[320px] md:min-h-[460px] lg:min-h-[500px] xl:min-h-[550px]':
-            variant === 'slider',
-          'bg-fill-thumbnail': variant !== 'antique',
-        },
+        'bg-no-repeat bg-center flex items-center rounded w-full h-[320px] md:h-[460px] lg:h-[500px] xl:h-[550px]', // Ensure full width and height
         className
       )}
       style={{
-        backgroundImage: `url('${selectedImage.url}')`,
-        backgroundPosition:
-          variant === 'antique' ? 'left bottom -10px' : 'center center',
+        backgroundImage: `url('${image?.url || ''}')`,
+        backgroundSize: 'cover', // Ensures the image covers the section
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center center', // Center the image
       }}
     >
       <div
         className={cn(
           'sm:absolute inset-0 mx-auto m-[15px] md:mt-[30px] xl:mt-[120px] xl:max-w-[1000px] 2xl:max-w-[1300px]',
           {
-            'max-w-[480px] md:max-w-[550px]': variant === 'default' || 'slider',
+            'max-w-[480px] md:max-w-[550px]': ['default', 'slider'].includes(
+              variant
+            ),
             'max-w-[480px] md:max-w-[650px]': variant === 'medium',
             '2xl:max-w-[1005px]': variant === 'antique',
           }
@@ -61,7 +53,7 @@ export default function HeroBannerCard({
                 variant !== 'antique',
               'text-brand-light xl:text-5xl 2xl:text-[48px]':
                 variant === 'default',
-              'text-brand-light xl:text-[40px] 2xl:text-5xl 2xl:mb-4 2xl:pb-0.5':
+              'text-brand-light xl:text-[40px] 2xl:mb-4 2xl:pb-0.5':
                 variant === 'medium',
             })}
             style={{
@@ -73,25 +65,27 @@ export default function HeroBannerCard({
           >
             {title}
           </h2>
-          <div
-            className={cn(
-              'text-base md:text-[15px] xl:text-lg leading-7 md:leading-8 xl:leading-[1.92em] relative z-10',
-              {
-                'text-brand-light':
-                  variant === 'default' || variant === 'slider',
-                '2xl:px-24': variant === 'medium',
-                'xl:text-xl': variant === 'antique',
-              }
-            )}
-            style={{
-              backgroundColor: 'rgba(0, 0, 0, 0.5)', // Consistent dark, transparent background
-              padding: '6px 12px',
-              borderRadius: '4px',
-              display: 'block',
-            }}
-          >
-            <PrismicRichText field={secondarytitle} />
-          </div>
+          {secondarytitle && (
+            <div
+              className={cn(
+                'text-base md:text-[15px] xl:text-lg leading-7 md:leading-8 xl:leading-[1.92em] relative z-10',
+                {
+                  'text-brand-light':
+                    variant === 'default' || variant === 'slider',
+                  '2xl:px-24': variant === 'medium',
+                  'xl:text-xl': variant === 'antique',
+                }
+              )}
+              style={{
+                backgroundColor: 'rgba(0, 0, 0, 0.5)', // Consistent dark, transparent background
+                padding: '6px 12px',
+                borderRadius: '4px',
+                display: 'block',
+              }}
+            >
+              <PrismicRichText field={secondarytitle} />
+            </div>
+          )}
         </div>
       </div>
     </div>

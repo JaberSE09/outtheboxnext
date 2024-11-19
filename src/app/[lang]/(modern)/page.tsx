@@ -29,6 +29,7 @@ export default async function Page({
 }) {
   const client = createClient();
   const banner = await client.getSingle('hero_banner');
+  const products = await client.getAllByType('products');
   return (
     <>
       <HeroSliderBlock
@@ -37,9 +38,9 @@ export default async function Page({
         className={`mb-8`}
         contentClassName="p-7 sm:pb-24 xl:pb-32 sm:pt-16 xl:pt-24 md:min-h-[270px] xl:min-h-[360px] 2xl:min-h-[550px]"
       />
-      {/* <Container>
-        <FeatureCarousel lang={lang} />
-        <BannerGrid
+      <Container>
+        <FeatureCarousel products={products} lang={lang} />
+        {/* <BannerGri
           lang={lang}
           data={bannerGrid}
           grid={3}
@@ -60,8 +61,8 @@ export default async function Page({
           lang={lang}
           data={bannerBrand}
           className="mb-8 lg:mb-12"
-        />
-      </Container> */}
+        /> */}
+      </Container>
     </>
   );
 }
