@@ -20,10 +20,11 @@ import { useTranslation } from 'src/app/i18n/client';
 import { AiOutlineUser } from 'react-icons/ai';
 import { IoLocationSharp } from 'react-icons/io5';
 import client from '@src/prismicio';
-import { SettingsDocument } from 'prismicio-types';
+import { CategoriesDocument, SettingsDocument } from 'prismicio-types';
 import { PrismicRichText } from '@prismicio/react';
 import { MdOutlineEmail } from 'react-icons/md';
 import Link from 'next/link';
+import Categories from '../../slices/Categories/index';
 const AuthMenu = dynamic(() => import('@layouts/header/auth-menu'), {
   ssr: false,
 });
@@ -37,9 +38,11 @@ const { site_header } = siteSettings;
 function Header({
   lang,
   settings,
+  categories,
 }: {
   lang: string;
   settings: SettingsDocument;
+  categories: CategoriesDocument[];
 }) {
   const {
     openSidebar,
@@ -191,7 +194,9 @@ function Header({
                     <FiMenu className="text-2xl me-3" />
                     {t('text-all-categories')}
                   </button>
-                  {categoryMenu && <CategoryDropdownMenu lang={lang} />}
+                  {categoryMenu && (
+                    <CategoryDropdownMenu menu={categories} lang={lang} />
+                  )}
                 </div>
                 <HeaderMenu
                   bgPrimary={true}

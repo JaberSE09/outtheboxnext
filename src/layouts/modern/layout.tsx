@@ -9,7 +9,7 @@ import { useIsMounted } from '@utils/use-is-mounted';
 import Footer from '@layouts/footer/footer';
 import Header from '@layouts/default/header';
 import { useTranslation } from 'src/app/i18n/client';
-import { SettingsDocument } from 'prismicio-types';
+import { CategoriesDocument, SettingsDocument } from 'prismicio-types';
 
 function ClientRenderedHighLightedBar({ lang }: { lang: string }) {
   const { t } = useTranslation(lang, 'common');
@@ -38,16 +38,18 @@ export default function ModernLayout({
   children,
   lang,
   settings,
+  categories,
 }: {
   children: React.ReactNode;
   lang: string;
   settings: SettingsDocument;
+  categories: CategoriesDocument[];
 }) {
   const isMounted = useIsMounted();
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header settings={settings} lang={lang} />
+      <Header categories={categories} settings={settings} lang={lang} />
       <main
         className="relative flex-grow"
         style={{

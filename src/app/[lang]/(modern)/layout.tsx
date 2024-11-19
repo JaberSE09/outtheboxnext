@@ -1,5 +1,6 @@
 import ModernLayout from '@layouts/modern/layout';
 import { createClient } from 'src/prismicio';
+import Categories from '../../../slices/Categories/index';
 
 export default async function DefaultLayout({
   children,
@@ -12,8 +13,11 @@ export default async function DefaultLayout({
 }) {
   const client = createClient();
   const settings = await client.getSingle('settings');
+  const categories = await client.getAllByType('categories');
+  console.log(categories);
+
   return (
-    <ModernLayout settings={settings} lang={lang}>
+    <ModernLayout categories={categories} settings={settings} lang={lang}>
       {children}
     </ModernLayout>
   );

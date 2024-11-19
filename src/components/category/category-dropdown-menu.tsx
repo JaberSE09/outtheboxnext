@@ -3,34 +3,28 @@ import CategoryListCardLoader from '@components/ui/loaders/category-list-card-lo
 import { useCategoriesQuery } from '@framework/category/get-all-categories';
 import cn from 'classnames';
 import CategoryMenu from '@components/ui/category-menu';
+import { CategoriesDocument, CategoriesDocumentData, SettingsDocumentDataLinksItem } from 'prismicio-types';
 
 interface CategoryDropdownProps {
   lang: string;
   className?: string;
   categoriesLimit?: number;
+  menu: CategoriesDocument[];
 }
 
 export default function CategoryDropdownMenu({
   lang,
   className,
   categoriesLimit = 12,
+  menu,
 }: CategoryDropdownProps) {
-  const {
-    data,
-    isLoading: loading,
-    error,
-  } = useCategoriesQuery({
-    limit: 15,
-  });
+  
 
   return (
     <div className={cn('absolute z-30 w-72 lg:w-full', className)}>
       <div className="max-h-full">
-        {error ? (
-          <div className="2xl:ltr:pr-4 2xl:rtl:pl-4">
-            <Alert message={error.message} />
-          </div>
-        ) : loading ? (
+
+        )
           <div
             className={
               'w-full bg-skin-fill border-t-0  rounded-b-md category-dropdown-menu'
@@ -45,7 +39,7 @@ export default function CategoryDropdownMenu({
           </div>
         ) : (
           <CategoryMenu
-            items={data?.categories?.data.slice(0)}
+            items={menu}
             categoriesLimit={categoriesLimit}
             lang={lang}
           />
