@@ -27,7 +27,6 @@ function SidebarMenuItem({
   depth?: number;
   lang: string;
 }) {
-  const { t } = useTranslation(lang, 'common');
   const { image, title, products } = item.data;
   const { id } = item;
   const dir = getDirection(lang);
@@ -48,7 +47,7 @@ function SidebarMenuItem({
               <PrismicNextImage width={25} height={25} field={image} />
             </div>
           )}
-          <span className="capitalize">{name}</span>
+          <span className="capitalize">{title}</span>
           {item && (
             <span className="hidden ltr:ml-auto rtl:mr-auto md:inline-flex">
               {dir === 'rtl' ? (

@@ -14,7 +14,6 @@ export default async function DefaultLayout({
   const client = createClient();
   const settings = await client.getSingle('settings');
   const categories = await client.getAllByType('categories');
-  console.log(categories);
 
   return (
     <ModernLayout categories={categories} settings={settings} lang={lang}>
