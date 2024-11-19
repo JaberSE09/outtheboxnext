@@ -1,8 +1,6 @@
 'use client';
 
 import Link from '@components/ui/link';
-import SearchIcon from '@components/icons/search-icon';
-import UserIcon from '@components/icons/user-icon';
 import MenuIcon from '@components/icons/menu-icon';
 import HomeIcon from '@components/icons/home-icon';
 import { useUI } from '@contexts/ui.context';
@@ -35,14 +33,7 @@ export default function BottomNavigation({
   categories: CategoriesDocument[];
 }) {
   const { t } = useTranslation(lang, 'common');
-  const {
-    openSidebar,
-    closeSidebar,
-    displaySidebar,
-    toggleMobileSearch,
-    isAuthorized,
-  } = useUI();
-  const { openModal } = useModalAction();
+  const { openSidebar, closeSidebar, displaySidebar } = useUI();
   const dir = getDirection(lang);
   const contentWrapperCSS = dir === 'ltr' ? { left: 0 } : { right: 0 };
 
@@ -61,18 +52,17 @@ export default function BottomNavigation({
           <MenuIcon />
         </button>
 
-        {settings?.data?.links?.map(
-          (linkItem: SettingsDocumentDataLinksItem, index: number) => (
+        {/* Render links starting from the second item */}
+        {settings?.data?.links
+          ?.slice(1) // Skip the first link
+          ?.map((link: SettingsDocumentDataLinksItem, index: number) => (
             <div key={index} className="shrink-0">
-              <PrismicNextLink field={linkItem.link}>
-                {linkItem.label || t('link')}
-              </PrismicNextLink>
+              <PrismicNextLink field={link.link} />
             </div>
-          )
-        )}
+          ))}
 
         <Link
-          href={`/${lang}${ROUTES.HOME}`}
+          href={`/${lang}/`}
           className="shrink-0"
           aria-label="Home"
         >
