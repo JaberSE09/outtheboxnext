@@ -13,6 +13,10 @@ import { getDirection } from '@utils/get-direction';
 import { useModalAction } from '@components/common/modal/modal.context';
 import motionProps from '@components/common/drawer/motion';
 import { useTranslation } from 'src/app/i18n/client';
+import { CategoriesDocument, SettingsDocument } from 'prismicio-types';
+import { SettingsDocumentDataLinksItem } from 'prismicio-types';
+import { PrismicNextLink } from '@prismicio/next';
+
 const CartButton = dynamic(() => import('@components/cart/cart-button'), {
   ssr: false,
 });
@@ -21,7 +25,15 @@ const AuthMenu = dynamic(() => import('@layouts/header/auth-menu'), {
 });
 const MobileMenu = dynamic(() => import('@layouts/header/mobile-menu'));
 
-export default function BottomNavigation({ lang }: { lang: string }) {
+export default function BottomNavigation({
+  lang,
+  settings,
+  categories,
+}: {
+  lang: string;
+  settings: SettingsDocument;
+  categories: CategoriesDocument[];
+}) {
   const { t } = useTranslation(lang, 'common');
   const {
     openSidebar,
@@ -33,11 +45,9 @@ export default function BottomNavigation({ lang }: { lang: string }) {
   const { openModal } = useModalAction();
   const dir = getDirection(lang);
   const contentWrapperCSS = dir === 'ltr' ? { left: 0 } : { right: 0 };
-  function handleLogin() {
-    openModal('LOGIN_VIEW');
-  }
+
   function handleMobileMenu() {
-    return openSidebar();
+    openSidebar();
   }
 
   return (
@@ -50,45 +60,36 @@ export default function BottomNavigation({ lang }: { lang: string }) {
         >
           <MenuIcon />
         </button>
-        <button
-          className="relative flex items-center justify-center h-auto shrink-0 focus:outline-none"
-          onClick={toggleMobileSearch}
-          aria-label="Search Button"
+
+        {settings?.data?.links?.map(
+          (linkItem: SettingsDocumentDataLinksItem, index: number) => (
+            <div key={index} className="shrink-0">
+              <PrismicNextLink field={linkItem.link}>
+                {linkItem.label || t('link')}
+              </PrismicNextLink>
+            </div>
+          )
+        )}
+
+        <Link
+          href={`/${lang}${ROUTES.HOME}`}
+          className="shrink-0"
+          aria-label="Home"
         >
-          <SearchIcon />
-        </button>
-        <Link href={`/${lang}${ROUTES.HOME}`} className="shrink-0">
-          <span className="sr-only">{t('breadcrumb-home')}</span>
           <HomeIcon />
         </Link>
-        <CartButton
-          hideLabel={true}
-          iconClassName="text-opacity-100"
-          lang={lang}
-        />
-        <AuthMenu
-          isAuthorized={isAuthorized}
-          href={`/${lang}${ROUTES.ACCOUNT}`}
-          btnProps={{
-            className: 'shrink-0 focus:outline-none',
-            children: <UserIcon />,
-            onClick: handleLogin,
-          }}
-        >
-          <UserIcon />
-        </AuthMenu>
       </div>
+
       <Drawer
         className="w-[375px]"
         placement={dir === 'rtl' ? 'right' : 'left'}
         open={displaySidebar}
         onClose={closeSidebar}
-        // @ts-ignore
         level={null}
         contentWrapperStyle={contentWrapperCSS}
         {...motionProps}
       >
-        <MobileMenu lang={lang} />
+        <MobileMenu settings={settings} categories={categories} lang={lang} />
       </Drawer>
     </>
   );

@@ -14,6 +14,7 @@ interface BannerProps {
 }
 
 function getImage(deviceWidth: number, imgObj: any) {
+  if (!imgObj) return { url: '' }; // Fallback for undefined images
   return deviceWidth < 480 ? imgObj.mobile : imgObj;
 }
 
@@ -24,8 +25,8 @@ export default function HeroBannerCard({
   heroContentCard = true,
 }: BannerProps) {
   const { width } = useWindowSize();
-  const { image, title, secondarytitle } = banner!;
-  const selectedImage = getImage(width!, image);
+  const { image, title = 'Default Title', secondarytitle } = banner || {};
+  const selectedImage = getImage(width || 200, image);
 
   return heroContentCard ? (
     <div
@@ -39,7 +40,7 @@ export default function HeroBannerCard({
         className
       )}
       style={{
-        backgroundImage: `url('${selectedImage.url}')`,
+        backgroundImage: `url(${selectedImage?.url || ''})`,
         backgroundPosition:
           variant === 'antique' ? 'left bottom -10px' : 'center center',
       }}
@@ -48,7 +49,9 @@ export default function HeroBannerCard({
         className={cn(
           'sm:absolute inset-0 mx-auto m-[15px] md:mt-[30px] xl:mt-[120px] xl:max-w-[1000px] 2xl:max-w-[1300px]',
           {
-            'max-w-[480px] md:max-w-[550px]': variant === 'default' || 'slider',
+            'max-w-[480px] md:max-w-[550px]': ['default', 'slider'].includes(
+              variant
+            ),
             'max-w-[480px] md:max-w-[650px]': variant === 'medium',
             '2xl:max-w-[1005px]': variant === 'antique',
           }
@@ -61,7 +64,7 @@ export default function HeroBannerCard({
                 variant !== 'antique',
               'text-brand-light xl:text-5xl 2xl:text-[48px]':
                 variant === 'default',
-              'text-brand-light xl:text-[40px] 2xl:text-5xl 2xl:mb-4 2xl:pb-0.5':
+              'text-brand-light xl:text-[40px] 2xl:mb-4 2xl:pb-0.5':
                 variant === 'medium',
             })}
             style={{
@@ -73,25 +76,27 @@ export default function HeroBannerCard({
           >
             {title}
           </h2>
-          <div
-            className={cn(
-              'text-base md:text-[15px] xl:text-lg leading-7 md:leading-8 xl:leading-[1.92em] relative z-10',
-              {
-                'text-brand-light':
-                  variant === 'default' || variant === 'slider',
-                '2xl:px-24': variant === 'medium',
-                'xl:text-xl': variant === 'antique',
-              }
-            )}
-            style={{
-              backgroundColor: 'rgba(0, 0, 0, 0.5)', // Consistent dark, transparent background
-              padding: '6px 12px',
-              borderRadius: '4px',
-              display: 'block',
-            }}
-          >
-            <PrismicRichText field={secondarytitle} />
-          </div>
+          {secondarytitle && (
+            <div
+              className={cn(
+                'text-base md:text-[15px] xl:text-lg leading-7 md:leading-8 xl:leading-[1.92em] relative z-10',
+                {
+                  'text-brand-light':
+                    variant === 'default' || variant === 'slider',
+                  '2xl:px-24': variant === 'medium',
+                  'xl:text-xl': variant === 'antique',
+                }
+              )}
+              style={{
+                backgroundColor: 'rgba(0, 0, 0, 0.5)', // Consistent dark, transparent background
+                padding: '6px 12px',
+                borderRadius: '4px',
+                display: 'block',
+              }}
+            >
+              <PrismicRichText field={secondarytitle} />
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -106,7 +111,7 @@ export default function HeroBannerCard({
           className
         )}
         style={{
-          backgroundImage: `url('${selectedImage.url}')`,
+          backgroundImage: `url('${selectedImage?.url || ''}')`,
           backgroundPosition:
             variant === 'antique' ? 'left bottom -10px' : 'center center',
         }}

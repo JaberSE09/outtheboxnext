@@ -57,7 +57,11 @@ export default function DefaultLayout({
         {children}
       </main>
       <Footer lang={lang} />
-      <MobileNavigation lang={lang} />
+      <MobileNavigation
+        settings={settings}
+        categories={categories}
+        lang={lang}
+      />
     </div>
   );
 }

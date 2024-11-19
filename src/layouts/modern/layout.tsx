@@ -59,7 +59,11 @@ export default function ModernLayout({
         {children}
       </main>
       <Footer lang={lang} />
-      {/* <MobileNavigation categories={categories} settings={settings} lang={lang} /> */}
+      <MobileNavigation
+        categories={categories}
+        settings={settings}
+        lang={lang}
+      />
     </div>
   );
 }
