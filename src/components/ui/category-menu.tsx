@@ -67,10 +67,12 @@ function SidebarMenu({
   items,
   className,
   lang,
+  categoriesLimit,
 }: {
   items: CategoriesDocument[];
   className?: string;
   lang: string;
+  categoriesLimit?: number;
 }) {
   const [categoryMenuToggle, setcategoryMenuToggle] = useState(Boolean(false));
   const { t } = useTranslation(lang, 'common');
@@ -86,7 +88,7 @@ function SidebarMenu({
         className
       )}
     >
-      {items?.map((item: CategoriesDocument, idx: number) => (
+      {items?.map((item: CategoriesDocument) => (
         <SidebarMenuItem
           key={`${item.uid}-key-${item.id}`}
           item={item}
@@ -109,7 +111,8 @@ function SidebarMenu({
                 <IoIosAddCircleOutline className="text-xl text-skin-base text-opacity-80" />
               )}
             </div>
-            <span className="capitalize ">{t('text-all-categories')}</span>
+
+            <span className="capitalize "></span>
           </div>
         </li>
       )}
