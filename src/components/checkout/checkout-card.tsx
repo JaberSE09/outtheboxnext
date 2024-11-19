@@ -91,19 +91,18 @@ const CheckoutCard: React.FC<{ lang: string }> = ({ lang }) => {
       <Text className="mt-8">
         {t('text-by-placing-your-order')}{' '}
         <Link href={`/${lang}${ROUTES.TERMS}`} legacyBehavior>
-          <a className="font-medium underline text-brand">
+          <div className="font-medium underline text-brand">
             {t('text-terms-of-service')}{' '}
-          </a>
+          </div>
         </Link>
         {t('text-and')}{' '}
         <Link href={`/${lang}${ROUTES.PRIVACY}`} legacyBehavior>
-          <a className="font-medium underline text-brand">
+          <div className="font-medium underline text-brand">
             {t('text-privacy')}
-          </a>
+          </div>
         </Link>
         . {t('text-credit-debit')}
       </Text>
-     
     </>
   );
 };

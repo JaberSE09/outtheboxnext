@@ -15,6 +15,7 @@ interface BannerProps {
 }
 
 function getImage(deviceWidth: number, imgObj: any) {
+  if (!imgObj) return { url: '', width: 0, height: 0 }; // Fallback for missing image
   return deviceWidth < 768 ? imgObj.mobile : imgObj.desktop;
 }
 
@@ -27,10 +28,11 @@ const BannerCard: React.FC<BannerProps> = ({
   classNameInner,
 }) => {
   const { width } = useWindowSize();
-  const { slug, title, image } = banner;
-  const selectedImage = getImage(width!, image);
+  const { slug, title, image } = banner || {}; // Safely destructure banner
+  const selectedImage = getImage(width || 0, image); // Fallback for undefined width
+
   return (
-    <div className={cn('mx-auto', className)}>
+    <div className={cn('mx-auto w-full', className)}>
       <Link
         href={`/${lang}${slug}`}
         className={cn(
@@ -38,29 +40,27 @@ const BannerCard: React.FC<BannerProps> = ({
           classNameInner
         )}
       >
-        <div className="relative inline-block overflow-hidden w-full box-sizing">
-          <div className="block w-full box-sizing">
-            <svg
-              className="block max-w-full h-auto"
-              xmlns="http://www.w3.org/2000/svg"
-              width={selectedImage.width}
-              height={selectedImage.height}
-              version="1.1"
+        <div className="relative inline-block w-full overflow-hidden">
+          {selectedImage?.url ? (
+            <Image
+              src={selectedImage.url}
+              alt={title || 'Banner Image'} // Fallback for missing title
+              width={selectedImage.width || 768} // Default width
+              height={selectedImage.height || 432} // Default height
+              sizes="(max-width: 768px) 100vw, 50vw" // Responsive sizing
+              className={cn(
+                'absolute top-0 left-0 w-full h-full object-cover',
+                {
+                  'rounded-md': variant === 'rounded',
+                }
+              )}
+              priority // Ensures the banner image loads quickly
             />
-          </div>
-          <Image
-            src={selectedImage.url}
-            alt={title}
-            width={0}
-            height={0}
-            sizes="100vw"
-            className={cn(
-              'absolute top-0 left-0 right-0 bottom-0 max-w-full max-h-full min-w-full min-h-full object-cover',
-              {
-                'rounded-md': variant === 'rounded',
-              }
-            )}
-          />
+          ) : (
+            <div className="w-full h-[200px] bg-gray-200 flex items-center justify-center">
+              <span className="text-gray-500">Image not available</span>
+            </div>
+          )}
         </div>
         {effectActive && (
           <div className="absolute top-0 block w-1/2 h-full transform -skew-x-12 ltr:-left-full rtl:-right-full z-5 bg-gradient-to-r from-transparent to-white opacity-30 group-hover:animate-shine" />

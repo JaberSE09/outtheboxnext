@@ -78,23 +78,23 @@ const Breadcrumb: React.FC<{ separator?: string; lang: string }> = ({
         activeClassName="font-semibold text-heading"
         lang={lang}
       >
-        <a className="inline-flex ">
+        <div className="inline-flex ">
           <IoHomeOutline className="ltr:mr-1.5 rtl:ml-1.5 text-brand-dark text-15px" />
           {t('breadcrumb-home')}
-        </a>
+        </div>
       </ActiveLink>
 
       {breadcrumbs?.map((breadcrumb: any) => (
         <ActiveLink
-            href={`${breadcrumb.href}`}
+          href={`${breadcrumb.href}`}
           activeClassName="text-heading"
           key={breadcrumb.href}
           legacyBehavior
           lang={lang}
         >
-          <a className="capitalize">
+          <div className="capitalize">
             {convertBreadcrumbTitle(breadcrumb.breadcrumb)}
-          </a>
+          </div>
         </ActiveLink>
       ))}
     </BreadcrumbItems>
