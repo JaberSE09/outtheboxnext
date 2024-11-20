@@ -4,15 +4,15 @@ import BannerCard from '@components/cards/banner-card';
 import useWindowSize from '@utils/use-window-size';
 import Carousel from '@components/ui/carousel/carousel';
 import { SwiperSlide } from '@components/ui/carousel/slider';
+import { CategoriesDocument } from 'prismicio-types';
 
 interface BannerProps {
-  data: any;
+  data: CategoriesDocument[];
   grid?: number;
   className?: string;
   girdClassName?: string;
   lang: string;
 }
-
 
 const BannerGrid: React.FC<BannerProps> = ({
   data,
@@ -24,19 +24,21 @@ const BannerGrid: React.FC<BannerProps> = ({
   const { width } = useWindowSize();
   return (
     <div className={className}>
-        <div
-            className={`grid gap-4 grid-cols-1 sm:grid-cols-${grid} ${girdClassName ? girdClassName: '2xl:gap-5 '}`}
-        >
-            {data?.map((banner: any) => (
-                <BannerCard
-                    key={`banner--key${banner.id}`}
-                    banner={banner}
-                    effectActive={true}
-                    className="w-full overflow-hidden rounded"
-                    lang={lang}
-                />
-            ))}
-        </div>
+      <div
+        className={`grid gap-4 grid-cols-1 sm:grid-cols-${grid} ${
+          girdClassName ? girdClassName : '2xl:gap-5 '
+        }`}
+      >
+        {data?.map((banner: CategoriesDocument) => (
+          <BannerCard
+            key={`banner--key${banner.id}`}
+            banner={banner}
+            effectActive={true}
+            className="w-full overflow-hidden rounded"
+            lang={lang}
+          />
+        ))}
+      </div>
     </div>
   );
 };

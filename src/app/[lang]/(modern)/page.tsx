@@ -30,6 +30,7 @@ export default async function Page({
   const client = createClient();
   const banner = await client.getSingle('hero_banner');
   const products = await client.getAllByType('products');
+  const categories = await client.getAllByType('categories');
   return (
     <>
       <HeroSliderBlock
@@ -40,16 +41,16 @@ export default async function Page({
       />
       <Container>
         <FeatureCarousel products={products} lang={lang} />
-        {/* <BannerGri
+        <BannerGrid
           lang={lang}
-          data={bannerGrid}
+          data={categories}
           grid={3}
           className="mb-8 lg:mb-12"
           girdClassName="xl:gap-5 xl:grid-cols-[1fr_minmax(770px,_1fr)_1fr] "
         />
-        <BestSellerProductFeed lang={lang} />
+        {/* <BestSellerProductFeed lang={lang} /> */}
       </Container>
-      <div className={'bg-zinc-100 py-8 sm:py-14 mb-8 lg:mb-12'}>
+      {/* <div className={'bg-zinc-100 py-8 sm:py-14 mb-8 lg:mb-12'}>
         <Container>
           <CategoryGridBlock className="mb-0 lg:mb-0" lang={lang} />
         </Container>
@@ -61,8 +62,8 @@ export default async function Page({
           lang={lang}
           data={bannerBrand}
           className="mb-8 lg:mb-12"
-        /> */}
-      </Container>
+        />
+      </Container> */}
     </>
   );
 }
