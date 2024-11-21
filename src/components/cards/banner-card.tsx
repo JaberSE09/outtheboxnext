@@ -20,7 +20,7 @@ const BannerCard: React.FC<BannerProps> = ({
   lang,
   banner,
   className,
-  variant = 'default',
+  variant = 'rounded',
   effectActive = true,
   classNameInner,
 }) => {

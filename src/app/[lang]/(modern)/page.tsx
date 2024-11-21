@@ -11,10 +11,10 @@ import {
   homeOnesGridHero as bannerGrid,
   homeHeroSlider as heroSlider,
 } from '@framework/static/banner';
-import CategoryGridBlock from '@components/common/category-grid-block';
 import ListingTabsElectronicFeed from '@components/product/feeds/listingtabs-electronic-feed';
 import Latestblog from '@components/common/latestblog';
 import { createClient } from 'src/prismicio';
+import SuppercategoryPopular from '@components/product/feeds/suppercategory-popular';
 
 export const metadata: Metadata = {
   title: 'Razor | Electronics Store Store React Template',
@@ -40,14 +40,20 @@ export default async function Page({
         contentClassName="p-7 sm:pb-24 xl:pb-32 sm:pt-16 xl:pt-24 md:min-h-[270px] xl:min-h-[360px] 2xl:min-h-[550px]"
       />
       <Container>
-        <FeatureCarousel products={products} lang={lang} />
+        {/* <SuppercategoryPopular
+          categories={categories}
+          lang={lang}
+          className="mb-8 lg:mb-12"
+          showBanner={true}
+        /> */}
+        {/* <FeatureCarousel products={products} lang={lang} />
         <BannerGrid
           lang={lang}
           data={categories}
           grid={3}
           className="mb-8 lg:mb-12"
           girdClassName="xl:gap-5 xl:grid-cols-[1fr_minmax(770px,_1fr)_1fr] "
-        />
+        /> */}
         {/* <BestSellerProductFeed lang={lang} /> */}
       </Container>
       {/* <div className={'bg-zinc-100 py-8 sm:py-14 mb-8 lg:mb-12'}>

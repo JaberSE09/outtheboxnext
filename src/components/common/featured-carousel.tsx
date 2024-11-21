@@ -82,6 +82,7 @@ const FeatureCarousel: React.FC<Props> = ({
 }) => {
   return (
     <div className={`heightFull ${className}`}>
+      <h1 className="text-center">Featured Products</h1>>
       <Carousel
         autoplay={false}
         breakpoints={breakpoints}

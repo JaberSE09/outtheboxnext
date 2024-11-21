@@ -24,7 +24,7 @@ const FeaturedCard: React.FC<Props> = ({ lang, item, className, layout }) => {
       )}
     >
       <div className="flex flex-shrink-0 items-center justify-center">
-        <PrismicNextImage width={50} height={50} field={image} />
+        <PrismicNextImage width={100} height={100} field={image} />
       </div>
       <div className="ps-4">
         <Heading variant="base" className="sm:text-sm hover:text-skin-primary">
